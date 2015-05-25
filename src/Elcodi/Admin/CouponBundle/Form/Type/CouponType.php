@@ -82,7 +82,7 @@ class CouponType extends AbstractType
                 'required' => true,
             ])
             ->add('name', 'text', [
-                'required' => false,
+                'required' => true,
             ])
             ->add('type', 'choice', [
                 'required' => true,
@@ -115,6 +115,9 @@ class CouponType extends AbstractType
             ])
             ->add('minimumPurchase', 'money_object', [
                 'required' => false,
+            ])
+            ->add('stackable', 'checkbox', [
+                'required' => false
             ])
             ->add('rule', 'entity', [
                 'class'       => $this->ruleNamespace,
