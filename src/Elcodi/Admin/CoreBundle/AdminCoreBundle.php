@@ -17,7 +17,10 @@
 
 namespace Elcodi\Admin\CoreBundle;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+use Elcodi\Admin\CoreBundle\DependencyInjection\AdminCoreExtension;
 
 /**
  * Class AdminCoreBundle
@@ -30,6 +33,20 @@ class AdminCoreBundle extends Bundle
      * @return null
      */
     public function getContainerExtension()
+    {
+        return new AdminCoreExtension();
+    }
+
+    /**
+     * Register Commands.
+     *
+     * Disabled as commands are registered as services.
+     *
+     * @param Application $application An Application instance
+     *
+     * @return null
+     */
+    public function registerCommands(Application $application)
     {
         return null;
     }

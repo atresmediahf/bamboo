@@ -351,7 +351,7 @@ admin:
                     manual: Application manuelle
                     automatic: Application automatique
             stackable:
-                title: Ce coupon peut être appliqué quand d'autres coupons sont présents
+                title: Ce coupon peut être appliqué même si d'autres coupons sont présents
             minimum_purchase:
                 title: Minimum d'achat
             price:
@@ -461,17 +461,8 @@ admin:
             subtotal: Sous-total
             discount: Réduction (coupon)
             shipping: Livraison
-        states:
-            title:       Historique
-            initial:     Nouvelle commande
-            unpaid:      Non payée
-            refunded:    Remboursée
-            shipped:     Livrée
-            not shipped: Non livrée
-            paid:        Payée
         transition:
             refund: Remboursement
-            ship:   Livraison
 
     page:
         single:   Page
@@ -533,6 +524,9 @@ admin:
                 title: Slug
                 placeholder: e.g. mon/super/produit
                 customize: Customiser slug
+            sku:
+                title: Numéro de référence
+                placeholder: ej. SAU102
             description:
                 title: Description
                 placeholder: e.g. Ce super produit est exactement ce que vous recherchez.
@@ -597,6 +591,9 @@ admin:
             dimensions:
                 title: Dimensions
                 description: "Mettez les dimensions et le poids de votre produit. Cette information sera utile pour calculer les coûts de livraison."
+            sku:
+                title: Numéro de référence
+                description: "Le numéro de référence (SKU) est un identifiant unique associé à un produit. Chaque produit a donc un SKU qui lui est propre."
             variants:
                 title: Déclinaisons
                 description: 'Les déclinaisons sont différentes versions d''un produit (couleur, taille ...). Les déclinaisons peuvent avoir un prix ou des attributs différents.'

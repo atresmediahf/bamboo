@@ -1,5 +1,5 @@
 {
-    "name": "elcodi-templates/store-template-bundle",
+    "name": "elcodi-plugin/store-template",
     "description": "Store Template Bundle for Bamboo",
     "keywords": [
         "elcodi",
@@ -27,26 +27,24 @@
         },
         {
             "name": "The Awesome Elcodi Community",
-            "homepage": "https://github.com/elcodi/elcodi/contributors"
+            "homepage": "https://github.com/elcodi-plugin/StoreTemplateBundle/contributors"
         }
     ],
     "require": {
         "php": ">=5.4",
 
-        "symfony/http-kernel": "~2.6",
-        "elcodi/bamboo-bundle": "~0.4.0"
+        "symfony/http-kernel": "^2.7"
     },
-    "provide": {
-        "elcodi-templates/template": "~0.4.0"
-    },
+    "minimum-stability": "beta",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Elcodi\\StoreTemplateBundle\\": ""
+            "Elcodi\\Plugin\\StoreTemplateBundle\\": ""
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.5-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }

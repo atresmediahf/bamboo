@@ -17,7 +17,10 @@
 
 namespace Elcodi\Admin\TemplateBundle;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+use Elcodi\Admin\TemplateBundle\DependencyInjection\AdminTemplateExtension;
 
 /**
  * Class AdminTemplateBundle
@@ -30,6 +33,20 @@ class AdminTemplateBundle extends Bundle
      * @return null
      */
     public function getContainerExtension()
+    {
+        return new AdminTemplateExtension();
+    }
+
+    /**
+     * Register Commands.
+     *
+     * Disabled as commands are registered as services.
+     *
+     * @param Application $application An Application instance
+     *
+     * @return null
+     */
+    public function registerCommands(Application $application)
     {
         return null;
     }

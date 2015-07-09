@@ -75,11 +75,12 @@ class ProductController extends Controller
             ], 301);
         }
 
-        $useStock = $this->get('elcodi.manager.configuration')
-            ->get('product.use_stock');
+        $useStock = $this
+            ->get('elcodi.store')
+            ->getUseStock();
 
         $relatedProducts = $this
-            ->get('store.product.service.product_collection_provider')
+            ->get('elcodi_store.provider.product_collection')
             ->getRelatedProducts($product, 3);
 
         $template = $product->hasVariants()

@@ -17,15 +17,16 @@
 
 namespace Elcodi\Admin\LanguageBundle\Controller;
 
-use Exception;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
+use Mmoreram\ControllerExtraBundle\Annotation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Elcodi\Admin\CoreBundle\Controller\Abstracts\AbstractAdminController;
-use Elcodi\Component\Core\Entity\Interfaces\EnabledInterface;
+use Elcodi\Component\Language\Entity\Interfaces\LanguageInterface;
+use Elcodi\Component\Store\Entity\Interfaces\StoreInterface;
 
 /**
  * Class Controller for Language
@@ -60,8 +61,7 @@ class LanguageController extends AbstractAdminController
     /**
      * Enable entity
      *
-     * @param Request          $request Request
-     * @param EnabledInterface $entity  Entity to enable
+     * @param LanguageInterface $language The language to enable
      *
      * @return array Result
      *
@@ -69,34 +69,33 @@ class LanguageController extends AbstractAdminController
      *      path = "/{iso}/enable",
      *      name = "admin_language_enable"
      * )
-     * @Method({"GET", "POST"})
+     * @Method({"POST"})
      *
      * @EntityAnnotation(
      *      class = "elcodi.entity.language.class",
+     *      name = "language",
      *      mapping = {
      *          "iso" = "~iso~"
      *      }
      * )
+     *
+     * @JsonResponse()
      */
-    public function enableAction(
-        Request $request,
-        EnabledInterface $entity
+    public function enableLanguageAction(
+        LanguageInterface $language
     ) {
-        $result = parent::enableAction(
-            $request,
-            $entity
-        );
+        $translator = $this->get('translator');
 
+        $this->enableEntity($language);
         $this->flushCache();
 
-        return $result;
+        return ['message' => $translator->trans('admin.language.saved.enabled')];
     }
 
     /**
      * Disable entity
      *
-     * @param Request          $request Request
-     * @param EnabledInterface $entity  Entity to disable
+     * @param LanguageInterface $language The language to disable
      *
      * @return array Result
      *
@@ -104,41 +103,95 @@ class LanguageController extends AbstractAdminController
      *      path = "/{iso}/disable",
      *      name = "admin_language_disable"
      * )
-     * @Method({"GET", "POST"})
+     * @Method({"POST"})
      *
      * @EntityAnnotation(
      *      class = "elcodi.entity.language.class",
+     *      name = "language",
      *      mapping = {
      *          "iso" = "~iso~"
      *      }
      * )
+     *
+     * @JsonResponse()
      */
-    public function disableAction(
-        Request $request,
-        EnabledInterface $entity
+    public function disableLanguageAction(
+        LanguageInterface $language
     ) {
+        $translator = $this->get('translator');
 
         /**
          * We cannot disable the default locale
          */
-        $masterLanguage = $this
-            ->container
-            ->getParameter('locale');
+        $masterLanguage = $configManager = $this
+            ->get('elcodi.store')
+            ->getDefaultLanguage();
 
-        if ($entity->getIso() == $masterLanguage) {
-            return $this->getFailResponse(
-                $request,
-                new Exception('You cannot disable your master language')
+        if ($language->getIso() == $masterLanguage) {
+            throw new HttpException(
+                '403',
+                $translator->trans('admin.language.error.disable_master_language')
             );
         }
 
-        $result = parent::disableAction(
-            $request,
-            $entity
-        );
-
+        $this->disableEntity($language);
         $this->flushCache();
 
-        return $result;
+        return ['message' => $translator->trans('admin.language.saved.disabled')];
+    }
+
+    /**
+     * Set the master language.
+     *
+     * @param LanguageInterface $language
+     *
+     * @return array
+     *
+     * @Route(
+     *      path = "/{iso}/master",
+     *      name = "admin_language_master"
+     * )
+     * @Method({"POST"})
+     *
+     * @EntityAnnotation(
+     *      class = {
+     *          "factory" = "elcodi.wrapper.store",
+     *          "method" = "get",
+     *          "static" = false
+     *      },
+     *      name = "store",
+     *      persist = false
+     * )
+     * @EntityAnnotation(
+     *      class = "elcodi.entity.language.class",
+     *      name = "language",
+     *      mapping = {
+     *          "iso" = "~iso~"
+     *      }
+     * )
+     *
+     * @JsonResponse()
+     */
+    public function masterLanguageAction(
+        StoreInterface $store,
+        LanguageInterface $language
+    ) {
+        $translator = $this->get('translator');
+        if (!$language->isEnabled()) {
+            throw new HttpException(
+                '403',
+                $translator->trans('admin.language.error.setting_disabled_master_language')
+            );
+        }
+
+        $store->setDefaultLanguage($language);
+        $this
+            ->get('elcodi.object_manager.store')
+            ->flush($store);
+        $this->flushCache();
+
+        return [
+            'message' => $translator->trans('admin.language.saved.master'),
+        ];
     }
 }

@@ -1,5 +1,60 @@
 admin:
     name: Admin
+    menu:
+        design: Customize Store
+    store:
+        saved: Settings saved.
+        settings: Settings
+        section:
+            advanced:
+                title: Advanced
+                description: Advanced settings for your store.
+            stock:
+                title: Stock
+                description: "If you activate this option you will be able to setup the stock in your products."
+            status:
+                title: Status
+                description: "Controls if the store is opened or closed."
+        field:
+            routingStrategy:
+                title: "Multilanguage urls format"
+                prefix_except_default: All urls have a language prefix except the default language
+                prefix: All urls have a language prefix
+                custom: No prefix for languages, only translated urls
+            enabled:
+                title: Store Enabled
+            useStock:
+                title: Activate stock Control
+    identity:
+        singular: Corporate image
+        more: More
+        less: Less
+        field:
+            name:
+                title: Store name
+                placeholder: e.g: My Awesome Store
+            leitmotiv:
+                title: Leitmotiv
+                placeholder: e.g: Awesome products for awesome people
+        section:
+            info:
+                title: Basic information
+                description: Provide a the name of your store and a leitmotiv (optional).
+            logo:
+                title: Logo
+                description: Here you can add an image with your logo. Please use the maximum quality posible.
+            mobileLogo:
+                title: Logo for mobile
+                description: This image will be show to the clients using a mobile to navigate your store. Is optional, but if you want to improve the mobile experience, you can.
+            secondaryLogo:
+                title: Logo for footer
+                description: If you want to customize the logo of the footer (optional) you can.
+            headerImage:
+                title: Header image
+                description: Add a background image for the header of your store.
+            backgroundImage:
+                title: Wallpaper image
+                description: Add here an image as big as possible (square or vertical format) and it will become the spectacular background image of your online store. If you add a wallpaper image it is better to not use header image.
     dashboard:
         single: Dashboard
         plural: Dashboards
@@ -35,8 +90,8 @@ admin:
             last30days: Last 30 days
             last90days: Last 90 days
     UI:
-      show_code: Show HTML code
-      show_visual: Hide HTML code
+        show_code: Show HTML code
+        show_visual: Hide HTML code
     address:
         single: Address
         plural: Addresses
@@ -48,11 +103,14 @@ admin:
             placeholder: Select one
         field:
             recipient_name:
-                title:       Recipient name
+                title:       Name / Company
                 placeholder: e.g. John
             recipient_surname:
-                title:       Recipient surname
+                title:       Surname (Optional if is company)
                 placeholder: e.g. Doe
+            email:
+                title: Email
+                placeholder: e.g. john.doe@mail.com
             address:
                 title:       Address
                 placeholder: "e.g. Awesonme Street, 42"
@@ -79,6 +137,13 @@ admin:
                 title: Province
             city:
                 title: City
+            isCompany:
+                title:      Do you own a company?
+                value:
+                    individual: Individual
+                    company:    Company
+            cif:
+                title: CIF / NIF
             save: Save address
 
     remember_user:
@@ -414,8 +479,16 @@ admin:
         field:
             symbol: Symbol
             iso: ISO
+            master: Master currency
             name: Name
             status: Enabled
+        saved:
+            enabled: This currency has been enabled
+            disabled: This currancy has been disabled
+            master: Main currency saved
+        error:
+            setting_disabled_master_currency: "You can't set a disabled currency as master"
+            disable_master_currency: You can not disable your master currency
 
     image:
         single: Image
@@ -424,6 +497,8 @@ admin:
             principal: First image will be the principal image.
             reorder: "You can drag & drop the images to reorder."
             upload: Upload images
+            upload_single: Upload image
+            upload_logo: Upload Logo
             deleted: Image deleted
             format: Format JPG, PNG or GIF. Max 20mb.
 
@@ -435,6 +510,13 @@ admin:
             iso: ISO
             master: Master language
             status: Enabled
+        saved:
+            enabled: This language has been enabled
+            disabled: This language has been disabled
+            master: Main language saved
+        error:
+            setting_disabled_master_language: "You can't set a disabled language as master"
+            disable_master_language: You can not disable your master language
 
     media:
         single: Media
@@ -482,17 +564,14 @@ admin:
             subtotal: Subtotal
             discount: Coupon Discount
             shipping: Shipping
-        states:
-            title:       History
-            initial:     New order
-            unpaid:      Unpaid
-            refunded:    Refunded
-            shipped:     Shipped
-            not shipped: Not shipped
-            paid:        Paid
         transition:
             refund: Refund
-            ship:   Ship
+            order ready: Order ready
+            picked up on store: Picked on store
+            picked up by carrier: Picked by carrier
+            delivered: Delivered
+            cancel: Cancel
+            return: Return
 
     page:
         single:   Page
@@ -551,6 +630,9 @@ admin:
             name:
                 title: Title
                 placeholder: e.g. My Awesome Product
+            sku:
+                title: SKU
+                placeholder: ej. SAU102
             slug:
                 title: Slug
                 placeholder: e.g. my/awesome/product
@@ -601,7 +683,7 @@ admin:
         error:
             no_category: Warning! This product has no associated category
             no_manufacturer: Warning! This product has no associated manufacturer
-            price_negative: Warning! The price cannot be negative
+            price_negative: Warning! The price can not be negative
         tag:
             in_home: Home
             has_variants: Has variants
@@ -620,6 +702,9 @@ admin:
             dimensions:
                 title: Dimensions
                 description: "Set the dimensions and weight for your product. This information will be useful to calculate shipping costs."
+            sku:
+                title: SKU
+                description: "SKU is an identifier that allows to identify the products. Each SKU it's related to just one product."
             variants:
                 title: Variants
                 description: 'Variants are diferent versions of this product (color, size... ). Variants can have different prices or other attributes.'
@@ -706,6 +791,9 @@ admin:
             visibility:
                 title: Visibility
                 description: Set this manufacturer as visible or hidden.
+            logo:
+                title: Manufacturer's Logo
+                description: Upload a logo image of the Manufacturer as bigger as possible. If it doesn't contain additional texts the better.
 
     category:
         single:   Category
@@ -820,6 +908,7 @@ admin:
     plugin:
         single: App
         plural: Apps
+        app_store: App store
         saved:  Plugin status saved
         field:
             visibility: Enable:
@@ -832,8 +921,13 @@ admin:
         saved: Settings saved
         section:
             store:
-                title: Store Setup
-                description: Set the Store data.
+                title: General
+            profile:
+                title: Corporate Image
+            address:
+                title: Address & Contact
+            corporate:
+                title: Corporate image
             products:
                 title: Products Setup
                 description: Set the product data.
@@ -910,3 +1004,9 @@ ui:
         success: Correctly deleted
     editor:
         help: Select some text to get some format options
+
+plugin_type:
+    app: Apps
+    payment: Payment methods
+    shipping: Shipping methods
+    social: Social

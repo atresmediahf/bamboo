@@ -1,0 +1,8 @@
+common:
+    order:
+        states:
+            title:       Historique
+            initial:     Nouvelle commande
+            unpaid:      Non payée
+            refunded:    Remboursée
+            paid:        Payée

@@ -56,7 +56,10 @@ class AdminLanguageExtension extends AbstractExtension
      */
     public function getConfigFiles(array $config)
     {
-        return [];
+        return [
+            'twig',
+            'menu',
+        ];
     }
 
     /**

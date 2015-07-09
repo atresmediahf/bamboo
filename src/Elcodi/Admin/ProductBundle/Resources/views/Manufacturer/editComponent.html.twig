@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="col-2-3">
-                    <div {% if elcodi_languages|length > 1 %}data-fc-modules="tabs" class="tabs-box" {% endif %}>
+                    <div {% if elcodi_languages|length > 1 %}data-fc-modules="tabs" class="tabs-box loading" {% endif %}>
                         {% for language in elcodi_languages %}
                             <section id="tab-{{ language }}" data-fc-name="{% if loop.first %}{{ '<i class="icon-star"></i>'|e }} {% endif %}{{ language|capitalize }}">
                                 <div class="box">
@@ -92,11 +92,13 @@
                     </div>
                 </div>
             </div>
-
-            {% include '@AdminMedia/Module/_images-form-field.html.twig' with {
-                images: manufacturer.images,
+            {% include "@AdminMedia/Module/_image-single-form-field.html.twig" with {
+                sectionTitle: 'admin.manufacturer.section.logo.title',
+                sectionDescription: 'admin.manufacturer.section.logo.description',
+                image: manufacturer.images.0,
+                imageForm: form.images,
+                imageName : 'logo'
             } %}
-
             <div class="ph-n">
                 <div class="box-background pv-s mb-l">
                     <a data-fc-modules="toggle" href="#metadata-edit"><i class="icon-plus-circle"></i> {{ 'admin.metadata.customize'|trans }}</a>
@@ -112,7 +114,7 @@
                         </div>
                     </div>
                     <div class="col-2-3">
-                        <div {% if elcodi_languages|length > 1 %}data-fc-modules="tabs" class="tabs-box"{% endif %}>
+                        <div {% if elcodi_languages|length > 1 %}data-fc-modules="tabs" class="tabs-box loading"{% endif %}>
                             {% for language in elcodi_languages %}
                                 <section id="metadata-{{ language }}" data-fc-name="{% if loop.first %}{{ '<i class="icon-star"></i>'|e }} {% endif %}{{ language|capitalize }}">
                                     <div class="box">

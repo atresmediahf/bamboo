@@ -19,7 +19,7 @@ namespace Elcodi\Admin\ProductBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 use Elcodi\Component\Core\Factory\Traits\FactoryTrait;
@@ -50,13 +50,11 @@ class ManufacturerType extends AbstractType
     }
 
     /**
-     * Default form options
+     * Configures the options for this type.
      *
-     * @param OptionsResolverInterface $resolver
-     *
-     * @return array With the options
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'empty_data' => function () {
@@ -110,6 +108,7 @@ class ManufacturerType extends AbstractType
                 'required' => false,
                 'property' => 'id',
                 'multiple' => true,
+                'expanded' => true,
             ])
             ->add('metaTitle', 'text', [
                 'required' => false,

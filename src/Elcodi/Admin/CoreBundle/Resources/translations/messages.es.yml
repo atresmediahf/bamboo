@@ -1,5 +1,60 @@
 admin:
     name: Administración
+    menu:
+        design: Personalizar tienda
+    store:
+        saved: Configuración guardada.
+        settings: Configuraciones
+        section:
+            advanced:
+                title: Opciones Avanzadas
+                description: En esta sección encontrarás opciones avanzadas de configuración.
+            stock:
+                title: Stock
+                description: "Activa esta opción para gestionar el stock de tus productos."
+            status:
+                title: Estado de la tienda
+                description: "Controla si la tienda esta abierta o cerrada al público."
+        field:
+            routingStrategy:
+                title: Estrategia de URLs para multiples lenguajes
+                prefix_except_default: Todas las urls tienen un prefijo excepto el lenguaje principal
+                prefix: Todas las urls tienen un prefijo
+                custom: Ningun prefijo para las lenguajes, traduciré todas las urls
+            enabled:
+                title: Activar tienda
+            useStock:
+                title: Usar Control de stock
+    identity:
+        singular: Imagen corporativa
+        more: Más
+        less: Menos
+        field:
+            name:
+                title: Nombre de tu tienda
+                placeholder: e.g: Mi tienda
+            leitmotiv:
+                title: Eslogan
+                placeholder: e.g: Productos para gente
+        section:
+            info:
+                title: Información básica
+                description: Introduce el nombre de tu tienda y si quieres un eslogan (opcional).
+            logo:
+                title: Logotipo de tu tienda
+                description: Si tienes un logotipo de tu tienda añádelo y se mostrará en varias partes de la tienda. Es recomendable que sea una imagen con buena calidad.
+            mobileLogo:
+                title: Logotipo versión móvil
+                description: Esta imagen se mostrará a aquellos clientes que accedan a tu tienda online desde un móvil. Es opcional, pero si quieres personalizar la experiencia para móvil, puedes.
+            secondaryLogo:
+                title: Logotipo a pie de página
+                description: Si quieres personalizar el logotipo a pie de página, añádelo. Es opcional.
+            headerImage:
+                title: Imagen de cabecera
+                description: Esta imagen se mostrará como cabecera de tu tienda. Dependiendo del diseño que selecciones varia ligeramente cómo se muestra, ya sea de fondo o de forma más prominente. Aunque es opcional recomendamos añadirla. Le dará mucha personalidad a tu tienda. Consejo: procura que la imagen tenga el máximo de definición posible y que sea horizontal y rectangular.
+            backgroundImage:
+                title: Imagen de fondo
+                description: Sube aquí una imagen lo más grande posible (cuadrada o vertical) y se convertirá en el espectacular fondo de tu tienda online. Si añades imagen de fondo es recomendable no utilizar imagen de cabecera.
     dashboard:
         single: Panel de control
         plural: Paneles de control
@@ -35,8 +90,8 @@ admin:
             last30days: Últimos 30 días
             last90days: Últimos 90 días
     UI:
-      show_code: Ver Código fuente
-      show_visual: Ocultar Código fuente
+        show_code: Ver Código fuente
+        show_visual: Ocultar Código fuente
     address:
         single: Dirección fiscal
         plural: Direcciones fiscales
@@ -48,11 +103,14 @@ admin:
             placeholder: Selecciona una
         field:
             recipient_name:
-                title:       Nombre del destinatario
+                title:       Nombre / Empresa
                 placeholder: ej. John
             recipient_surname:
-                title:       Apellido del destinatario
+                title:       Apellidos (Opcional si es empresa)
                 placeholder: ej. Doe
+            email:
+                title: Correo electrónico
+                placeholder: ej. john.doe@mail.com
             address:
                 title:       Dirección
                 placeholder: "ej. Calle impresionante, 42"
@@ -79,6 +137,13 @@ admin:
                 title: Provincia
             city:
                 title: Ciudad
+            isCompany:
+                title: Es empresa o persona física?
+                value:
+                    individual: Persona física
+                    company:    Empresa
+            cif:
+                title: CIF / NIF
             save: Guardar dirección
 
     remember_user:
@@ -417,6 +482,13 @@ admin:
             iso: ISO
             name: Nombre
             status: Activo
+        saved:
+            enabled: La divisa ha sido habilitada
+            disabled: La divisa ha sido deshabilitada
+            master: Se ha guardado la divisa principal
+        error:
+            setting_disabled_master_currency: No se puede guardar como principal una divisa desactivada
+            disable_master_currency: No puedes desactivar tu divisa principal
 
     image:
         single: Imagen
@@ -425,6 +497,8 @@ admin:
             principal: La primera imagen será la imagen principal.
             reorder: "Puedes arrastrar las imágenes para reordenarlas."
             upload: Subir imágenes
+            upload_single: Subir imagen
+            upload_logo: Subir Logotipo
             deleted: Imagen Borrada
             format: Formato JPG, PNG o GIF de un máximo 20 MB
 
@@ -436,6 +510,13 @@ admin:
             iso: ISO
             master: Idioma principal
             status: Activo
+        saved:
+            enabled: El idioma ha sido habilitado
+            disabled: El idioma ha sido deshabilitado
+            master: Se ha guardado el idioma principal
+        error:
+            setting_disabled_master_language: No se puede guardar como principal un idioma desactivado
+            disable_master_language: No puedes desactivar tu idioma principal
 
     media:
         single: Imagen
@@ -483,17 +564,14 @@ admin:
             subtotal: Subtotal
             discount: Cupón de descuento
             shipping: Entrega
-        states:
-            title:       Historial
-            initial:     Nuevo pedido
-            unpaid:      Sin pagar
-            refunded:    Reembolsado
-            shipped:     Enviado
-            not shipped: Sin enviar
-            paid:        Pagado
         transition:
             refund: Reembolsar
-            ship:   Enviar
+            order ready: Pedido listo
+            picked up on store: Recogido en tienda
+            picked up by carrier: Recogido por el transportista
+            delivered: Entregado
+            cancel: Cancelar
+            return: Devolver
 
     page:
         single:   Página
@@ -552,6 +630,9 @@ admin:
             name:
                 title: Título
                 placeholder: ej. Mi genial producto
+            sku:
+                title: Número de referencia
+                placeholder: ej. SAU102
             slug:
                 title: Slug
                 placeholder: ej. my/genial/producto
@@ -620,6 +701,9 @@ admin:
             dimensions:
                 title: Dimensiones
                 description: "Configura las dimensiones y peso de tu producto. Esta información será realmente útil para calcular los costes de envio."
+            sku:
+                title: Número de referencia
+                description: "El Número de referencia (SKU) es un identificador único que permite identificar los productos. Cada SKU se asocia con un sólo producto."
             variants:
                 title: Variantes
                 description: 'Las variantes son versiones diferentes del mismo producto (Color, talla...). Las variantes pueden tener diferente precio o atributos.'
@@ -706,6 +790,9 @@ admin:
             visibility:
                 title: Visibilidad
                 description: Configura el fabricante como visible y activo.
+            logo:
+                title: Logotipo del fabricante
+                description: Sube una imagen del logo del fabricante/marca del producto. Se recomienda que el logo no contenga textos adicionales, sólo la marca, y que sea de la mayor resolución posible.
 
     category:
         single:   Categoría
@@ -820,6 +907,7 @@ admin:
     plugin:
         single: Complemento
         plural: Complementos
+        app_store: Listado de complementos
         saved:  Estado de la app guardado
         field:
             visibility: Activo:
@@ -831,14 +919,17 @@ admin:
         plural: Configuraciones
         saved: Configuración guardada
         section:
-            store:
-                title: Configuración de la tienda
-                description: Configura los datos de la tienda.
             products:
                 title: Configuración del producto
                 description: Configura los datos del producto.
             payment:
                 title: Métodos de pago
+            store:
+                title: General
+            address:
+                title: Dirección fiscal
+            corporate:
+                title: Imagen corporativa
         field:
             store_enabled: Tienda activada
             store_under_construction: Tienda en construcción
@@ -910,3 +1001,9 @@ ui:
         success: Borrado correctamente
     editor:
         help: Selecciona el texto para ver las opciones de formato
+
+plugin_type:
+    app: Aplicaciones
+    payment: Métodos de pago
+    shipping: Transportistas
+    social: Social

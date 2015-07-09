@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Elcodi\Admin\CoreBundle\Controller\Abstracts\AbstractAdminController;
 use Elcodi\Component\Plugin\Entity\Plugin;
-use Elcodi\Component\Plugin\Form\Type\PluginType;
 use Elcodi\Component\Plugin\PluginTypes;
 
 /**
@@ -40,6 +39,8 @@ class PluginController extends AbstractAdminController
     /**
      * List plugins
      *
+     * @param string $category Optional plugin category
+     *
      * @return array Result
      *
      * @Route(
@@ -47,18 +48,35 @@ class PluginController extends AbstractAdminController
      *      name = "admin_plugin_list",
      *      methods = {"GET"}
      * )
+     *
+     * @Route(
+     *      path = "s/{category}",
+     *      name = "admin_plugin_categorized_list",
+     *      methods = {"GET"}
+     * )
+     *
      * @Template
      */
-    public function listAction()
+    public function listAction($category = null)
     {
+        $criteria = [
+            'type' => PluginTypes::TYPE_PLUGIN,
+        ];
+
+        if ($category !== null) {
+            $criteria['category'] = $category;
+        }
+
         $plugins = $this
             ->get('elcodi.repository.plugin')
-            ->findBy([
-                'type' => PluginTypes::TYPE_PLUGIN,
-            ]);
+            ->findBy(
+                $criteria,
+                [ 'category' => 'ASC' ]
+            );
 
         return [
             'plugins' => $plugins,
+            'category' => $category,
         ];
     }
 
@@ -94,8 +112,10 @@ class PluginController extends AbstractAdminController
 
         $form = $this
             ->createForm(
-                new PluginType($plugin),
-                $plugin->getFieldValues()
+                'elcodi_form_type_plugin',
+                $plugin->getFieldValues(), [
+                    'plugin' => $plugin,
+                ]
             );
 
         if ($request->isMethod(Request::METHOD_POST)) {

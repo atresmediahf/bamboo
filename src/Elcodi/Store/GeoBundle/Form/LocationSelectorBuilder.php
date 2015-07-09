@@ -19,7 +19,7 @@ namespace Elcodi\Store\GeoBundle\Form;
 
 use Doctrine\ORM\EntityNotFoundException;
 
-use Elcodi\Component\Geo\Services\Interfaces\LocationProviderInterface;
+use Elcodi\Component\Geo\Adapter\LocationProvider\Interfaces\LocationProviderAdapterInterface;
 use Elcodi\Component\Geo\ValueObject\LocationData;
 
 /**
@@ -42,7 +42,7 @@ class LocationSelectorBuilder
     protected $selects;
 
     /**
-     * @var LocationProviderInterface
+     * @var LocationProviderAdapterInterface
      *
      * A location provider
      */
@@ -51,11 +51,10 @@ class LocationSelectorBuilder
     /**
      * Builds a new class
      *
-     * @param LocationProviderInterface $locationProvider
+     * @param LocationProviderAdapterInterface $locationProvider
      */
-    public function __construct(
-        LocationProviderInterface $locationProvider
-    ) {
+    public function __construct(LocationProviderAdapterInterface $locationProvider)
+    {
         $this->locationProvider = $locationProvider;
     }
 
@@ -69,11 +68,11 @@ class LocationSelectorBuilder
      */
     public function getSelects($locationId, $maxLocationType)
     {
-        $this->selects         = [];
+        $this->selects = [];
         $this->maxLocationType = $maxLocationType;
 
         if ($locationId) {
-            $hierarchy    = $this
+            $hierarchy = $this
                 ->getHierarchy($locationId);
 
             $rootLocation = !empty($hierarchy)
@@ -103,7 +102,7 @@ class LocationSelectorBuilder
             ? $selectedLocation->getId()
             : null;
 
-        $rootLocations   = $this
+        $rootLocations = $this
             ->locationProvider
             ->getRootLocations();
 
@@ -141,10 +140,10 @@ class LocationSelectorBuilder
             $selectedRootLocation = array_shift($hierarchy);
 
             $locationExample = reset($childrenLocations);
-            $options         = $this->generateOptions($childrenLocations);
+            $options = $this->generateOptions($childrenLocations);
 
             if ($selectedRootLocation) {
-                $selected          = $selectedRootLocation->getId();
+                $selected = $selectedRootLocation->getId();
                 $childrenLocations =
                     $this->maxLocationType !== $locationExample->getType()
                         ? $childrenLocations = $this
@@ -152,7 +151,7 @@ class LocationSelectorBuilder
                         ->getChildren($selectedRootLocation->getId())
                         : null;
             } else {
-                $selected          = null;
+                $selected = null;
                 $childrenLocations = null;
             }
 
